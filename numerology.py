@@ -10,7 +10,8 @@ class Person:
         self.risks = [7, 16, 25, 34, 52, 61, 70, 79, 88, 92]
         self.highrisks = [29, 40, 43]
     
-    def gcalc(self, word): #Calculates the gross number from the word.
+    def gcalc(self, word): 
+        '''Calculates the gross number from the word.'''
         word = list(word)
         total = 0
         for letter in word:
@@ -47,13 +48,15 @@ class Person:
         total = self.reduce(total)
         return(total)
     
-    def getInNum(self): # Returns the numeric value of the first letter in a name
+    def getInNum(self): 
+        '''Returns the numeric value of the first letter in a name.'''
         nletter = list(self.name)
         nletter = nletter[0]
         total = self.calcTable[nletter]
         return(total)
         
-    def getIsNum(self): # Returns the numeric values of the first letter in a surname
+    def getIsNum(self): 
+        '''Returns the numeric values of the first letter in a surname.'''
         sletter = list(self.surname)
         sletter = sletter[0]
         total = self.calcTable[sletter]
@@ -61,35 +64,43 @@ class Person:
         
     
     def getWest(self):
+        '''Returns the number for the western part of cross.'''
         west = self.ncalc(self.name)
         return(west)
         
     def getEast(self):
+        '''Returns the number for the eastern part of cross.'''
         east = self.ncalc(self.surname)
         return(east)
     
     def getNorth(self):
+        '''Returns the personal number.'''
         total = self.getInNum()+self.getIsNum()
         total = self.reduce(total)
         return(total)
     
     def getFirst(self):
+        '''Returns the number of the first life trimester.'''
         total = self.gcalc(self.name) + self.gcalc(self.surname)
         return(total)
     
     def getSecond(self):
+        '''Returns the number of the second life trimester.'''
         total = self.getNorth() + self.getFirst()
         return(total)
         
     def getThird(self):
+        '''Returns the number of the third life trimester.'''
         total = (self.gcalc(self.name)+self.getNorth()) + (self.gcalc(self.surname)+self.getNorth())
         return(total)
         
     def getSouth(self):
+        '''Returns the number in the southern part of cross.'''
         total = self.reduce(self.getThird())
         return(total)
         
     def calcCross(self):
+        '''Returns the values of the horizontal and vertical additions on the cross.'''
         horizontal = self.getWest()+self.getEast()
         vertical = self.getNorth()+self.getSouth()
         middle = horizontal + vertical
@@ -108,6 +119,7 @@ class Person:
         return(total)
      
     def getRisk(self,number):
+        '''Finds out whether a number is a risk number.'''
         if number in self.risks:
             risk = '!'
         elif number in self.highrisks:
@@ -117,6 +129,7 @@ class Person:
         return(risk)
         
     def getFlow(self, number):
+        '''Finds out whether there is an energy leak.'''
         if number == 8:
             flow = 'EF'
         elif number%8 == 0:
@@ -126,6 +139,7 @@ class Person:
         return(flow)
 
 class PrintCross:
+    '''Prints out all values in the cross (no background though).'''
     def __init__(self, person):
         self.person = person
             
