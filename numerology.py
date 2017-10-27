@@ -9,6 +9,7 @@ class Person:
                                     'N':5,'Ň':5, 'W':5,'Ö':5, 'F':6, 'O':6,'Ó':6,  'X':6,'G':7, 'P':7, 'Y':7, 'Ý':7,'H':8, 'Q':8, 'Z':8,'Ž':8,'I':9,'Í':9, 'Ü':9, 'R':9, 'Ř':9}
         self.risks = [7, 16, 25, 34, 52, 61, 70, 79, 88, 92]
         self.highrisks = [29, 40, 43]
+        self.problematic = 0
     
     def gcalc(self, word): 
         '''Calculates the gross number from the word.'''
@@ -66,38 +67,44 @@ class Person:
     def getWest(self):
         '''Returns the number for the western part of cross.'''
         west = self.ncalc(self.name)
+        west = self.reduce(west)
         return(west)
         
     def getEast(self):
         '''Returns the number for the eastern part of cross.'''
         east = self.ncalc(self.surname)
+        east = self.reduce(east)
         return(east)
+    
+    def getSubNorth(self):
+        subnorth = self.getInNum()+self.getIsNum()
+        return(subnorth)
     
     def getNorth(self):
         '''Returns the personal number.'''
-        total = self.getInNum()+self.getIsNum()
-        total = self.reduce(total)
-        return(total)
+        north = self.getSubNorth()
+        north = self.reduce(north)
+        return(north)
     
     def getFirst(self):
         '''Returns the number of the first life trimester.'''
-        total = self.gcalc(self.name) + self.gcalc(self.surname)
-        return(total)
+        first = self.gcalc(self.name) + self.gcalc(self.surname)
+        return(first)
     
     def getSecond(self):
         '''Returns the number of the second life trimester.'''
-        total = self.getNorth() + self.getFirst()
-        return(total)
+        second = self.getNorth() + self.getFirst()
+        return(second)
         
     def getThird(self):
         '''Returns the number of the third life trimester.'''
-        total = (self.gcalc(self.name)+self.getNorth()) + (self.gcalc(self.surname)+self.getNorth())
-        return(total)
+        third = (self.gcalc(self.name)+self.getSubNorth()) + (self.gcalc(self.surname)+self.getSubNorth())
+        return(third)
         
     def getSouth(self):
         '''Returns the number in the southern part of cross.'''
-        total = self.reduce(self.getThird())
-        return(total)
+        south = self.reduce(self.getThird())
+        return(south)
         
     def calcCross(self):
         '''Returns the values of the horizontal and vertical additions on the cross.'''
@@ -170,13 +177,14 @@ class PrintNums:
         print("Hrubé číslo jména:", self.person.gcalc(name), self.person.getRisk(self.person.gcalc(name)))
         print("Hrubé číslo příjmení:", self.person.gcalc(surname), self.person.getRisk(self.person.gcalc(surname)))
         print("-------------------------------------------------------------")
-        print("Čisté číslo jména (západ):", self.person.getWest(), self.person.getRisk(self.person.getWest()))
-        print("Čisté číslo příjmení (východ):", self.person.getEast(), self.person.getRisk(self.person.getEast()))
-        print("Číslo osobnosti (sever):", self.person.getNorth(), self.person.getRisk(self.person.getNorth()))
-        print("Číslo (jih):", self.person.getSouth(), self.person.getRisk(self.person.getSouth()))
+        print("Západ:", self.person.getWest(), self.person.getRisk(self.person.getWest()))
+        print("Východ:", self.person.getEast(), self.person.getRisk(self.person.getEast()))
+        print("Sever:", self.person.getNorth(), self.person.getRisk(self.person.getNorth()))
+        print("Jih:", self.person.getSouth(), self.person.getRisk(self.person.getSouth()))
         print("-------------------------------------------------------------")
         print("Číslo iniciály jména: ", self.person.getInNum(), self.person.getRisk(self.person.getInNum()))
         print("Číslo iniciály příjmení: ", self.person.getIsNum(), self.person.getRisk(self.person.getIsNum()))
+        print("Číslo osobnosti: ",self.person.getNorth(),self.person.getRisk(self.person.getNorth()))
         print("-------------------------------------------------------------")
         print("Číslo první fáze života: ", self.person.getFirst(), self.person.getRisk(self.person.getFirst()))
         print("Číslo druhé fáze života: ", self.person.getSecond(), self.person.getRisk(self.person.getSecond()))
