@@ -12,7 +12,7 @@ class Person:
         self.problematic = 0
     
     def gcalc(self, word): 
-        '''Calculates the gross number from the word.'''
+        """Calculate the gross number from the word."""
         word = list(word)
         total = 0
         for letter in word:
@@ -21,7 +21,7 @@ class Person:
         return(total)
         
     def reduce(self, number): 
-        '''Reduces gross numbers to netto numbers.'''
+        """Reduce gross numbers to netto numbers."""
         if number == 11 or number == 22:  # Numbers 11 or 22 should not be reduced.
             total = number
         else:
@@ -43,21 +43,21 @@ class Person:
         return(total)
         
     def ncalc(self, word): 
-        '''Calculates the netto numbers.'''
+        """Calculate the netto numbers."""
         word = list(word)
         total = self.gcalc(word)
         total = self.reduce(total)
         return(total)
     
     def getInNum(self): 
-        '''Returns the numeric value of the first letter in a name.'''
+        """Return the numeric value of the first letter in a name."""
         nletter = list(self.name)
         nletter = nletter[0]
         total = self.calcTable[nletter]
         return(total)
         
     def getIsNum(self): 
-        '''Returns the numeric values of the first letter in a surname.'''
+        """Return the numeric values of the first letter in a surname."""
         sletter = list(self.surname)
         sletter = sletter[0]
         total = self.calcTable[sletter]
@@ -65,13 +65,13 @@ class Person:
         
     
     def getWest(self):
-        '''Returns the number for the western part of cross.'''
+        """Return the number for the western part of cross."""
         west = self.ncalc(self.name)
         west = self.reduce(west)
         return(west)
         
     def getEast(self):
-        '''Returns the number for the eastern part of cross.'''
+        """Return the number for the eastern part of cross."""
         east = self.ncalc(self.surname)
         east = self.reduce(east)
         return(east)
@@ -81,33 +81,33 @@ class Person:
         return(subnorth)
     
     def getNorth(self):
-        '''Returns the personal number.'''
+        """Return the personal number."""
         north = self.getSubNorth()
         north = self.reduce(north)
         return(north)
     
     def getFirst(self):
-        '''Returns the number of the first life trimester.'''
+        """Return the number of the first life trimester."""
         first = self.gcalc(self.name) + self.gcalc(self.surname)
         return(first)
     
     def getSecond(self):
-        '''Returns the number of the second life trimester.'''
+        """Return the number of the second life trimester."""
         second = self.getNorth() + self.getFirst()
         return(second)
         
     def getThird(self):
-        '''Returns the number of the third life trimester.'''
+        """Return the number of the third life trimester."""
         third = (self.gcalc(self.name)+self.getSubNorth()) + (self.gcalc(self.surname)+self.getSubNorth())
         return(third)
         
     def getSouth(self):
-        '''Returns the number in the southern part of cross.'''
+        """Return the number in the southern part of cross."""
         south = self.reduce(self.getThird())
         return(south)
         
     def calcCross(self):
-        '''Returns the values of the horizontal and vertical additions on the cross.'''
+        """Return the values of the horizontal and vertical additions on the cross."""
         horizontal = self.getWest()+self.getEast()
         vertical = self.getNorth()+self.getSouth()
         middle = horizontal + vertical
@@ -126,7 +126,7 @@ class Person:
         return(total)
      
     def getRisk(self,number):
-        '''Finds out whether a number is a risk number.'''
+        """Find out whether a number is a risk number."""
         if number in self.risks:
             risk = '!'
         elif number in self.highrisks:
@@ -136,7 +136,7 @@ class Person:
         return(risk)
         
     def getFlow(self, number):
-        '''Finds out whether there is an energy leak.'''
+        """Find out whether there is an energy leak."""
         if number == 8:
             flow = 'EF'
         elif number%8 == 0:
@@ -146,7 +146,7 @@ class Person:
         return(flow)
 
 class PrintCross:
-    '''Prints out all values in the cross (no background though).'''
+    """Print out all values in the cross (no background though)."""
     def __init__(self, person):
         self.person = person
             
